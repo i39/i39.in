@@ -60,7 +60,7 @@
         message.textContent = 'Спасибо! Ваше сообщение отправлено.';
         form.reset();
       }).catch(function () {
-        message.textContent = 'Не удалось отправить форму. Позвоните нам или напишите на info@i39.in.';
+        message.textContent = 'Не удалось отправить форму. Позвоните нам или напишите на office@i39.in.';
       }).then(function () {
         button.disabled = false;
         button.textContent = originalText;
