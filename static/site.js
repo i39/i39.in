@@ -42,6 +42,18 @@
 
   var form = document.getElementById('contact-form');
   if (form) {
+    var requiredFields = form.querySelectorAll('[required]');
+    for (var fieldIndex = 0; fieldIndex < requiredFields.length; fieldIndex++) {
+      requiredFields[fieldIndex].addEventListener('invalid', function () {
+        if (this.validity.valueMissing) {
+          this.setCustomValidity('необходимо заполнить данное поле');
+        }
+      });
+      requiredFields[fieldIndex].addEventListener('input', function () {
+        this.setCustomValidity('');
+      });
+    }
+
     form.addEventListener('submit', function (event) {
       event.preventDefault();
       var message = document.getElementById('form-message');
