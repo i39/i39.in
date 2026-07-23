@@ -32,7 +32,8 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Build
-        run: hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
+        # Для собственного домена используем baseURL из hugo.toml.
+        run: hugo --gc --minify
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
