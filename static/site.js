@@ -22,7 +22,6 @@
     var i;
     activeSlide = index;
     for (i = 0; i < slides.length; i++) {
-      /* Второй аргумент classList.toggle не поддерживается в старых Safari. */
       if (i === index) {
         slides[i].classList.add('is-active');
         dots[i].classList.add('is-active');
@@ -42,17 +41,30 @@
   }
 
   var form = document.getElementById('contact-form');
-  var localHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-  if (form && localHost) {
+  if (form) {
     form.addEventListener('submit', function (event) {
       event.preventDefault();
       var message = document.getElementById('form-message');
-      if (!form.elements.phone.value.trim() && !form.elements.email.value.trim()) {
-        message.textContent = 'Укажите телефон или e-mail.';
-        return;
-      }
-      message.textContent = 'Спасибо! Ваше сообщение принято.';
-      form.reset();
+      var button = form.querySelector('button[type="submit"]');
+      var originalText = button.textContent;
+      button.disabled = true;
+      button.textContent = 'Отправка…';
+      message.textContent = '';
+
+      window.fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' }
+      }).then(function (response) {
+        if (!response.ok) { throw new Error('FormSubmit error'); }
+        message.textContent = 'Спасибо! Ваше сообщение отправлено.';
+        form.reset();
+      }).catch(function () {
+        message.textContent = 'Не удалось отправить форму. Позвоните нам или напишите на info@i39.in.';
+      }).then(function () {
+        button.disabled = false;
+        button.textContent = originalText;
+      });
     });
   }
 }());
