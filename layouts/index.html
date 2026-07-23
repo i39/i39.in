@@ -1,0 +1,55 @@
+{{ define "main" }}
+  {{ $about := site.GetPage "/about" }}
+  {{ $services := site.GetPage "/services" }}
+  {{ $contact := site.GetPage "/contact" }}
+  <main>
+    <section class="hero" aria-label="ООО Инновация">
+      <div class="hero__slides" aria-hidden="true">
+        {{ range $index, $slide := .Params.hero_slides }}<div class="hero__slide{{ if eq $index 0 }} is-active{{ end }}" style="background-image:linear-gradient(#0008, #0008),url('{{ $slide.image | relURL }}')"></div>{{ end }}
+      </div>
+      <div class="hero__content">
+        <p class="hero__eyebrow">Калининград · с 2006 года</p>
+        <h1>{{ .Title }}</h1>
+        <p class="hero__lead">{{ .Description }}</p>
+        <a class="button button--light" href="#feedback">Оставить заявку</a>
+        <div class="hero__dots" aria-label="Слайды">
+          {{ range $index, $slide := .Params.hero_slides }}<button class="hero__dot{{ if eq $index 0 }} is-active{{ end }}" type="button" aria-label="Показать слайд {{ add $index 1 }}" data-slide="{{ $index }}"></button>{{ end }}
+        </div>
+      </div>
+    </section>
+
+    <section class="section container intro"><div>{{ .Content }}</div></section>
+
+    {{ with $about }}
+    <section class="section section--muted" id="about"><div class="container two-columns">
+      <div><p class="overline">О нас</p><h2>{{ .Title }}</h2><p class="lead">{{ .Summary }}</p></div>
+      <div class="prose">{{ .Content }}<a class="text-link" href="{{ .RelPermalink }}">Подробнее о компании →</a></div>
+    </div></section>
+    {{ end }}
+
+    {{ with $services }}
+    <section class="section container" id="services"><p class="overline">Чем занимаемся</p><h2>{{ .Title }}</h2>
+      <div class="service-card prose">{{ .Content }}</div>
+    </section>
+    {{ end }}
+
+    <section class="feedback" id="feedback"><div class="container feedback__inner">
+      <p class="overline">Связаться с нами</p><h2>{{ .Params.form_title }}</h2>
+      <form class="contact-form" id="contact-form" name="contact" action="#" method="post" data-netlify="true">
+        <input type="hidden" name="form-name" value="contact">
+        <label><span class="sr-only">Имя</span><input name="name" type="text" placeholder="Имя" autocomplete="name"></label>
+        <label><span class="sr-only">Телефон</span><input name="phone" type="tel" placeholder="Телефон" autocomplete="tel"></label>
+        <label><span class="sr-only">E-mail</span><input name="email" type="email" placeholder="E-mail" autocomplete="email"></label>
+        <label><span class="sr-only">Комментарий</span><textarea name="comment" placeholder="Комментарий"></textarea></label>
+        <button class="button" type="submit">Отправить</button><p class="form-message" id="form-message" role="status"></p>
+      </form>
+    </div></section>
+
+    {{ with $contact }}
+    <section class="contacts" id="contact" aria-label="Контакты">
+      <div class="contacts__card"><p class="overline">Контакты</p><h2>{{ site.Title }}</h2><p>{{ .Params.address }}</p><p><a href="tel:{{ .Params.phone_link }}">{{ .Params.phone }}</a></p><p><a href="mailto:{{ .Params.email }}">{{ .Params.email }}</a></p><a class="text-link" href="{{ .RelPermalink }}">Страница контактов →</a></div>
+      <iframe class="map" title="Карта: {{ .Params.address }}" src="{{ .Params.map_url }}" loading="lazy" allowfullscreen></iframe>
+    </section>
+    {{ end }}
+  </main>
+{{ end }}

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+  <title>{{ if not .IsHome }}{{ .Title }} — {{ end }}{{ .Site.Title }}</title>
+  <script>(function(){var theme='light';try{theme=window.localStorage.getItem('theme')||theme}catch(e){}document.documentElement.setAttribute('data-theme',theme)}())</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alice&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ "style.css" | relURL }}">
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="{{ site.Home.RelPermalink }}">Инновация</a>
+    <nav aria-label="Основная навигация">
+      {{ range site.Menus.main }}<a href="{{ .URL }}">{{ .Name }}</a>{{ end }}
+      <button class="theme-toggle" type="button" aria-label="Переключить цветовую тему" title="Переключить тему"><span aria-hidden="true">☼</span><span class="sr-only">Переключить тему</span></button>
+    </nav>
+  </header>
+  {{ block "main" . }}{{ end }}
+  <footer class="site-footer">© {{ now.Year }} ООО «Инновация»</footer>
+  <script src="{{ "site.js" | relURL }}"></script>
+</body>
+</html>

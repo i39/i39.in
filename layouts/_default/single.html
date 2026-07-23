@@ -1,0 +1,13 @@
+{{ define "main" }}
+<main class="page">
+  <article class="container prose page__content">
+    <p class="overline">ООО «Инновация»</p>
+    <h1>{{ .Title }}</h1>
+    {{ with .Params.address }}
+      <div class="contact-details"><p>{{ . }}</p><p><a href="tel:{{ $.Params.phone_link }}">{{ $.Params.phone }}</a></p><p><a href="mailto:{{ $.Params.email }}">{{ $.Params.email }}</a></p></div>
+    {{ end }}
+    {{ .Content }}
+    {{ with .Params.map_url }}<iframe class="map page__map" title="Карта" src="{{ . }}" loading="lazy" allowfullscreen></iframe>{{ end }}
+  </article>
+</main>
+{{ end }}

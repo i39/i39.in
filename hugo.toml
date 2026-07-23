@@ -1,0 +1,20 @@
+baseURL = 'https://i39.in/'
+locale = 'ru-RU'
+title = 'ООО Инновация'
+disableKinds = ['taxonomy', 'term']
+
+[params]
+  hero_image = '/images/hero.png'
+
+[[menus.main]]
+  name = 'О компании'
+  pageRef = '/about'
+  weight = 10
+[[menus.main]]
+  name = 'Услуги'
+  pageRef = '/services'
+  weight = 20
+[[menus.main]]
+  name = 'Контакты'
+  pageRef = '/contact'
+  weight = 30
